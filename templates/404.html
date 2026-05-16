@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Error 404 - No Encontrado{% endblock %}
+{% block header %}¡Fuera de Juego!{% endblock %}
+
+{% block contenido %}
+<div class="container mt-5 py-5 text-center">
+    <div class="card p-5 mx-auto shadow-lg" style="max-width: 600px; background-color: #1a1d20; border: 1px solid #343a40;">
+        
+        <div class="mb-4">
+            <h1 class="text-warning fw-bold" style="font-size: 6rem; text-shadow: 2px 2px 5px rgba(0,0,0,0.5);">404</h1>
+        </div>
+        
+        <h2 class="text-white mb-3"><i class="fa-solid fa-triangle-exclamation text-warning me-2"></i>Página no encontrada</h2>
+        <p class="text-secondary fs-5 mb-5">
+            Parece que el jersey que buscas no está en nuestra alineación o el enlace está roto.
+        </p>
+        
+        <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
+            <a href="/" class="btn btn-info px-4 py-2 fw-bold">
+                <i class="fa-solid fa-house me-2"></i> Volver al Inicio
+            </a>
+            <a href="/catalogo" class="btn btn-outline-light px-4 py-2 fw-bold">
+                <i class="fa-solid fa-store me-2"></i> Ver Catálogo
+            </a>
+        </div>
+        
+    </div>
+</div>
+{% endblock %}

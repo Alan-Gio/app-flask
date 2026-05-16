@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Editar Producto{% endblock %}
+{% block header %}Actualizar Datos del Producto{% endblock %}
+
+{% block contenido %}
+<div>
+    {% if producto %}
+        <div class="text-center mb-4">
+            <p class="text-secondary">Estás editando el producto: <strong class="text-primary">{{ producto.p_name }}</strong></p>
+            <a href="/tabla_productos" class="text-decoration-underline"><i class="fa-solid fa-arrow-left"></i> Regresar a la Tabla</a>
+        </div>
+
+ 
+        <form action="{{ url_for('editar_producto', id=producto.p_id) }}" method="post" enctype="multipart/form-data">
+    
+            <div class="text-center mb-4">
+                <label class="mb-2">Imagen Actual:</label><br>
+                {% if producto.p_img %}
+                    <img src="data:image/jpeg;base64,{{ producto.p_img }}" alt="Imagen del producto" width="150" style="border-radius: 8px;">
+                {% else %}
+                    <div class="text-secondary py-3 px-4 border rounded d-inline-block">Sin imagen</div>
+                {% endif %}
+            </div>
+
+            <div>
+                <label for="eImg">Cambiar Imagen (Deja en blanco para conservar la actual):</label>
+                <input type="file" name="eImg" id="eImg" accept="image/*">
+            </div>
+
+            <div>
+                <label for="eCod">Código SKU:</label>
+                <input type="text" name="eCod" id="eCod" value="{{ producto.p_cod }}" required>
+            </div>
+            <div>
+                <label for="eNombre">Nombre del Producto:</label>
+                <input type="text" name="eNombre" id="eNombre" required value="{{ producto.p_name }}">
+            </div>
+            <div>
+                <label for="eDesc">Descripción:</label>
+                <textarea name="eDesc" id="eDesc" rows="3">{{ producto.p_desc }}</textarea>
+            </div>
+            <div>
+                <label for="eCat">Categoría:</label>
+                <input type="text" name="eCat" id="eCat" value="{{ producto.p_cat }}">
+            </div>
+            <div>
+                <label for="ePrecio">Precio ($):</label>
+                <input type="number" step="0.01" name="ePrecio" id="ePrecio" required value="{{ producto.p_precio }}">
+            </div>
+            <div>
+                <label for="eStock">Stock:</label>
+                <input type="number" name="eStock" id="eStock" value="{{ producto.p_stock }}">
+            </div>
+            
+            <div class="mt-4">
+                <button type="submit">Guardar Cambios</button>
+            </div>
+        </form>
+    {% else %}
+        <div class="alert alert-danger text-center">
+            No se encontró información de este producto en la base de datos.
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Login{% endblock %}
+{% block header %}Iniciar Sesión{% endblock %}
+
+{% block contenido %}
+<div class="text-center">
+    <form action="{{ url_for('login') }}" method="POST">
+        <div>
+            <label for="cUsuario">Correo electrónico</label>
+            <input type="email" name="cUsuario" id="cUsuario" placeholder="ejemplo@email.com" required>
+        </div>
+        <div>
+            <label for="cpass">Contraseña</label>
+            <input type="password" name="cpass" id="cpass" required>
+        </div>    
+        <div>
+            <button type="submit">Entrar</button>
+        </div>
+    </form>
+    
+    <div class="mt-3">
+        <p class="text-secondary">¿No tienes cuenta? <a href="{{ url_for('formulario') }}">Crear una cuenta</a></p>
+    </div>
+</div>
+{% endblock %}

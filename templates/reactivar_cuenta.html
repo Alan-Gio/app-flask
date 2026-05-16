@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Reactivar Cuenta{% endblock %}
+
+{% block contenido %}
+<div class="container text-center py-5 mt-5">
+    <div class="card p-5 mx-auto shadow-lg" style="max-width: 500px; background-color: #1a1d20; border: 1px solid #343a40;">
+        <i class="fa-solid fa-user-shield fa-4x text-info mb-4"></i>
+        <h2 class="text-white mb-3">¡Hola de nuevo, {{ nombre }}!</h2>
+        <p class="text-secondary mb-4">
+            Tu cuenta se encuentra actualmente <strong>desactivada</strong>. ¿Te gustaría reactivarla para volver a comprar en THE MVP STORE?
+        </p>
+        
+        <form action="/confirmar_reactivacion" method="POST">
+            <button type="submit" class="btn btn-success w-100 fw-bold py-2 mb-3">
+                <i class="fa-solid fa-power-off me-2"></i> SÍ, REACTIVAR MI CUENTA
+            </button>
+            <a href="/" class="btn btn-outline-secondary w-100">Ahora no, volver al inicio</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

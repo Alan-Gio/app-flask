@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Editar Usuario{% endblock %}
+{% block header %}Actualizar Usuario{% endblock %}
+
+{% block contenido %}
+    {% if info_user %}
+        <div class="text-center mb-4">
+            <a href="/tabla" class="text-decoration-underline"><i class="fa-solid fa-arrow-left"></i> Regresar a la Tabla</a>
+        </div>
+
+        <form action="{{ url_for('editar', id=info_user.id_user) }}" method="post">
+            <div>
+                <label for="eNombre">Nombre</label>
+                <input type="text" name="eNombre" id="eNombre" required value="{{ info_user.name_user }}">
+            </div>
+            <div>
+                <label for="eApell">Apellido Paterno</label>
+                <input type="text" name="eApell" id="eApell" required value="{{ info_user.apellp_user }}">             
+            </div>
+            <div>
+                <label for="eApell2">Apellido Materno</label>
+                <input type="text" name="eApell2" id="eApell2" required value="{{ info_user.apellm_user }}">
+            </div> 
+            <div>
+                <label for="eEdad">Edad</label>
+                <input type="number" name="eEdad" id="eEdad" required value="{{ info_user.edad_user }}">
+            </div>
+            <div>
+                <label for="eUsuario">Correo Electrónico</label>
+                <input type="email" name="eUsuario" id="eUsuario" required value="{{ info_user.mail_user }}">
+            </div> 
+            <div>
+                <label for="eRol">Rol de Usuario</label>
+                <select name="eRol" id="eRol" required>
+                    <option value="cliente" {% if info_user.rol_user == 'cliente' %}selected{% endif %}>Cliente</option>
+                    <option value="admin" {% if info_user.rol_user == 'admin' %}selected{% endif %}>Administrador</option>
+                </select>
+            </div>
+            <div class="mt-4">
+                <button type="submit">Actualizar Usuario</button>
+            </div> 
+        </form>
+    {% else %}
+        <div class="alert alert-danger text-center">
+            No hay información disponible.
+        </div>   
+    {% endif %}
+{% endblock %}

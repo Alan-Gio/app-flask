@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Añadir Producto{% endblock %}
+{% block header %}Añadir Nuevo Producto{% endblock %}
+
+{% block contenido %}
+<div>
+    <form action="/agregar_productos" method="post" enctype="multipart/form-data">
+        <div class="text-center mb-4">
+            <a href="/tabla_productos" class="text-decoration-underline"><i class="fa-solid fa-arrow-left"></i> Regresar a la Tabla</a>
+        </div>
+        <div>
+            <label for="p_codig">Código SKU</label>
+            <input type="text" name="p_codig" id="p_codig" required>
+        </div>
+        <div>
+            <label for="p_nombre">Nombre del Producto</label>
+            <input type="text" name="p_nombre" id="p_nombre" required>
+        </div>
+        <div>
+            <label for="p_desc">Descripción</label>
+            <textarea name="p_desc" id="p_desc" rows="3" required></textarea>
+        </div>
+        <div>
+            <label for="p_cat">Categoría</label>
+            <select name="p_cat" id="p_cat" required>
+                <option value="ligamx">Liga MX</option>
+                <option value="ligueone">Ligue 1</option>
+                <option value="premierleague">Premier League</option>
+                <option value="laliga">La Liga</option>
+            </select>
+        </div>
+        <div>
+            <label for="p_precio">Precio ($)</label>
+            <input type="number" step="0.01" name="p_precio" id="p_precio" required>
+        </div>
+        <div>
+            <label for="p_stock">Stock Inicial</label>
+            <input type="number" name="p_stock" id="p_stock" required>
+        </div>
+        <div>
+            <label for="p_img">Imagen del Producto</label>
+            <input type="file" name="p_img" id="p_img" required accept="image/*">
+        </div>
+        <div>
+            <button type="submit">Guardar Producto</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

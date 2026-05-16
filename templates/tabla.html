@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Usuarios{% endblock %}
+{% block header %}Gestión de Usuarios{% endblock %}
+
+{% block contenido %}
+<div class="table-responsive">
+    
+    <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-3">
+        
+        <form action="/tabla" method="GET" class="d-flex align-items-center gap-2 m-0">
+            <label for="rol" class="text-secondary fw-bold mb-0">Filtrar por rol:</label>
+            <select name="rol" id="rol" class="form-control" style="width: auto; background-color: #262626; color: white; border: 1px solid var(--border-color); cursor: pointer;" onchange="this.form.submit()">
+                <option value="todos" {% if filtro_actual == 'todos' %}selected{% endif %}>Todos los usuarios</option>
+                <option value="admin" {% if filtro_actual == 'admin' %}selected{% endif %}>Administradores</option>
+                <option value="cliente" {% if filtro_actual == 'cliente' %}selected{% endif %}>Clientes</option>
+            </select>
+        </form>
+
+        <a href="{{ url_for('formulario') }}" class="btn m-0"><i class="fa-solid fa-user-plus"></i> Agregar Usuario</a>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>Edad</th>
+                <th>Correo</th>
+                <th>Rol</th>
+                <th>Registro</th>
+                <th colspan="2" class="text-center">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if usuarios %}
+                {% for mostrar in usuarios %}
+                <tr>
+                    <td>{{ mostrar.id_user }}</td>
+                    <td>{{ mostrar.name_user }}</td>
+                    <td>{{ mostrar.apellp_user }} {{ mostrar.apellm_user }}</td>
+                    <td>{{ mostrar.edad_user }}</td>
+                    <td>{{ mostrar.mail_user }}</td>
+                    <td>
+                        {% if mostrar.rol_user == 'admin' %}
+                            <span class="badge bg-warning text-dark">{{ mostrar.rol_user }}</span>
+                        {% else %}
+                            <span class="badge bg-secondary">{{ mostrar.rol_user }}</span>
+                        {% endif %}
+                    </td>
+                    <td style="font-size: 0.8rem;">{{ mostrar.creacion_user }}</td>
+                    <td><a href="{{ url_for('editar', id=mostrar.id_user) }}" class="btn btn-sm" style="padding: 5px 10px; font-size: 0.8rem;">Editar</a></td>
+                    <td><a href="{{ url_for('eliminar', id=mostrar.id_user) }}" class="btn btn-sm" style="background-color: var(--danger-color); padding: 5px 10px; font-size: 0.8rem;" onclick="return confirm('¿Estás seguro que deseas eliminar al usuario?');">Eliminar</a></td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="9" class="text-center py-4">No hay usuarios registrados con ese criterio</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Inicio{% endblock %}
+
+{% block header %}
+    TO BE THE BEST, YOU GOTTA WEAR THE BEST
+{% endblock %}
+
+{% block contenido %}
+<div id="carruselMVP" class="carousel slide carousel-fade shadow-lg" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carruselMVP" data-bs-slide-to="0" class="active"></button>
+        <button type="button" data-bs-target="#carruselMVP" data-bs-slide-to="1"></button>
+        <button type="button" data-bs-target="#carruselMVP" data-bs-slide-to="2"></button>
+    </div>
+
+    <div class="carousel-inner">
+        <div class="carousel-item active" data-bs-interval="4000">
+            <img src="{{ url_for('static', filename='img/banner_futbol.jpg') }}" class="d-block w-100" alt="Jerseys de Fútbol">
+            <div class="carousel-caption d-none d-md-block">
+                <h3>Colección Fútbol</h3>
+                <p>Las mejores ligas del mundo en un solo lugar.</p>
+            </div>
+        </div>
+
+        <div class="carousel-item" data-bs-interval="4000">
+            <img src="{{ url_for('static', filename='img/banner_basquet.jpg') }}" class="d-block w-100" alt="NBA Collection">
+            <div class="carousel-caption d-none d-md-block">
+                <h3>MVP Basketball</h3>
+                <p>Domina la duela con estilo.</p>
+            </div>
+        </div>
+
+        <div class="carousel-item" data-bs-interval="4000">
+            <img src="{{ url_for('static', filename='img/banner_nfl.jpg') }}" class="d-block w-100" alt="NFL Jerseys">
+            <div class="carousel-caption d-none d-md-block">
+                <h3>Emoción del Gridiron</h3>
+                <p>Siente la pasión del fútbol americano.</p>
+            </div>
+        </div>
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#carruselMVP" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Anterior</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carruselMVP" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Siguiente</span>
+    </button>
+</div>
+
+{% endblock %}

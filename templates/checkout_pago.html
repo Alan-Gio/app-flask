@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block contenido %}
+<div class="container py-5">
+    <div class="mx-auto" style="max-width: 500px;">
+        <div class="text-center mb-4">
+            <span class="badge bg-secondary px-3 py-2">Paso 2 de 3: Pago</span>
+        </div>
+        <div class="card bg-dark text-white border-secondary shadow-lg p-4">
+            <h4 class="mb-4"><i class="fa-solid fa-credit-card text-warning me-2"></i> Datos de Tarjeta</h4>
+            <form action="/checkout/confirmar" method="POST">
+                <div class="mb-3">
+                    <label class="small text-secondary">Número de Tarjeta</label>
+                    <input type="text" class="form-control bg-dark text-white border-secondary" placeholder="0000 0000 0000 0000" maxlength="16" required>
+                </div>
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <label class="small text-secondary">Expiración (MM/AA)</label>
+                        <input type="text" class="form-control bg-dark text-white border-secondary" placeholder="12/26" maxlength="5" required>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <label class="small text-secondary">CVC</label>
+                        <input type="text" class="form-control bg-dark text-white border-secondary" placeholder="123" maxlength="3" required>
+                    </div>
+                </div>
+                <div class="alert alert-info py-2 small" style="background: rgba(13, 202, 240, 0.1); border: 1px solid #0dcaf0;">
+                    <i class="fa-solid fa-info-circle me-1"></i> Esta es una pasarela de prueba, no se realizará ningún cargo real.
+                </div>
+                <button type="submit" class="btn btn-warning w-100 fw-bold text-dark mt-2">Revisar Pedido <i class="fa-solid fa-arrow-right ms-1"></i></button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

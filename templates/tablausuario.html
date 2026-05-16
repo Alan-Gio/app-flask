@@ -1,0 +1,176 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Mi Perfil{% endblock %}
+{% block header %}Configuración de Cuenta{% endblock %}
+
+{% block contenido %}
+<div class="container mt-4 py-5">
+    {% if usuario %}
+        <div class="card p-4 mx-auto shadow-lg mb-5" style="max-width: 700px; background-color: #1a1d20; border: 1px solid #343a40;">
+            
+            <h4 class="text-white mb-4"><i class="fa-solid fa-user-gear me-2 text-info"></i> Información Personal</h4>
+            <form action="/actualizar_perfil" method="POST" class="mb-5">
+                <input type="hidden" name="accion" value="datos_personales">
+                <div class="row g-3 text-start">
+                    <div class="col-md-6">
+                        <label class="form-label text-secondary small">Nombre(s)</label>
+                        <input type="text" name="nombre" value="{{ usuario.name_user }}" class="form-control bg-dark text-white border-secondary">
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label text-secondary small">Apellido P.</label>
+                        <input type="text" name="ap_p" value="{{ usuario.apellp_user }}" class="form-control bg-dark text-white border-secondary">
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label text-secondary small">Apellido M.</label>
+                        <input type="text" name="ap_m" value="{{ usuario.apellm_user }}" class="form-control bg-dark text-white border-secondary">
+                    </div>
+                    <div class="col-md-8">
+                        <label class="form-label text-secondary small">Correo Electrónico</label>
+                        <input type="email" name="correo" value="{{ usuario.mail_user }}" class="form-control bg-dark text-white border-secondary">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label text-secondary small">Edad</label>
+                        <input type="number" name="edad" value="{{ usuario.edad_user }}" class="form-control bg-dark text-white border-secondary">
+                    </div>
+                    <div class="col-12 mt-3">
+                        <button type="submit" class="btn btn-sm btn-info px-4 fw-bold">Actualizar Datos</button>
+                    </div>
+                </div>
+            </form>
+
+            <hr class="border-secondary my-4">
+
+            <h4 class="text-white mb-4"><i class="fa-solid fa-map-location-dot me-2 text-success"></i> Dirección de Envío</h4>
+            <form action="/actualizar_perfil" method="POST" class="mb-5">
+                <input type="hidden" name="accion" value="direccion">
+                <div class="row g-3 text-start">
+                    <div class="col-12">
+                        <label class="form-label text-secondary small">Calle y Número</label>
+                        <input type="text" name="calle" value="{{ usuario.calle or '' }}" class="form-control bg-dark text-white border-secondary">
+                    </div>
+                    <div class="col-md-8">
+                        <label class="form-label text-secondary small">Colonia</label>
+                        <input type="text" name="colonia" value="{{ usuario.colonia or '' }}" class="form-control bg-dark text-white border-secondary">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label text-secondary small">CP</label>
+                        <input type="text" name="cp" value="{{ usuario.cp or '' }}" class="form-control bg-dark text-white border-secondary">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label text-secondary small">Ciudad</label>
+                        <input type="text" name="ciudad" value="{{ usuario.ciudad or '' }}" class="form-control bg-dark text-white border-secondary">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label text-secondary small">Estado</label>
+                        <input type="text" name="estado" value="{{ usuario.estado or '' }}" class="form-control bg-dark text-white border-secondary">
+                    </div>
+                    <div class="col-12 mt-3">
+                        <button type="submit" class="btn btn-sm btn-success px-4 fw-bold">Guardar Dirección</button>
+                    </div>
+                </div>
+            </form>
+            
+            <hr class="border-secondary my-4">
+            
+            <h4 class="text-white mb-4"><i class="fa-solid fa-lock me-2 text-warning"></i> Seguridad</h4>
+            <form action="/actualizar_perfil" method="POST">
+                <input type="hidden" name="accion" value="password">
+                <div class="row g-3 text-start align-items-end">
+                    <div class="col-md-8">
+                        <label class="form-label text-secondary small">Nueva Contraseña</label>
+                        <input type="password" name="nueva_pass" class="form-control bg-dark text-white border-secondary" placeholder="Dejar en blanco para no cambiar">
+                    </div>
+                    <div class="col-md-4">
+                        <button type="submit" class="btn btn-sm btn-warning w-100 fw-bold">Cambiar Pass</button>
+                    </div>
+                </div>
+            </form><hr class="border-secondary my-4">
+            <div class="text-end">
+                <form action="/desactivar_cuenta" method="POST" onsubmit="return confirm('¿Estás seguro de que quieres desactivar tu cuenta? Podrás recuperarla en cualquier momento iniciando sesión de nuevo.');">
+                    <button type="submit" class="btn btn-outline-danger fw-bold">
+                        <i class="fa-solid fa-user-xmark me-2"></i> Desactivar mi cuenta
+                    </button>
+                </form>
+        </div>
+
+
+        <div class="card p-4 mx-auto shadow-lg" style="max-width: 800px; background-color: #1a1d20; border: 1px solid #343a40;">
+            <h4 class="text-white mb-4"><i class="fa-solid fa-clock-rotate-left me-2 text-primary"></i> Mis Compras Recientes</h4>
+            {% if pedidos %}
+                <div class="table-responsive">
+                    <table class="table table-dark table-hover border-secondary">
+                        <thead>
+                            <tr class="text-secondary" style="font-size: 0.8rem; text-transform: uppercase;">
+                                <th>Orden #</th>
+                                <th>Fecha</th>
+                                <th>Total</th>
+                                <th>Estado</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for pedido in pedidos %}
+                            <tr>
+                                <td class="fw-bold text-info">#{{ pedido[0] }}</td>
+                                <td class="small">{{ pedido[1].strftime('%d/%m/%Y') }}</td>
+                                <td class="text-success fw-bold">${{ "{:,.2f}".format(pedido[2]) }}</td>
+                                <td>
+                                    <span class="badge {% if pedido[3] == 'Entregado' %}bg-success{% elif pedido[3] == 'Pendiente' %}bg-warning text-dark{% else %}bg-primary{% endif %}">
+                                        {{ pedido[3] }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-info" onclick="verDetalles('{{ pedido[0] }}')" style="font-size: 0.7rem;">
+                                        <i class="fa-solid fa-eye"></i> Ver Detalles
+                                    </button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="text-center py-4">
+                    <i class="fa-solid fa-box-open fa-3x text-secondary mb-3"></i>
+                    <p class="text-secondary">Aún no has realizado ninguna compra.</p>
+                    <a href="/catalogo" class="btn btn-sm btn-outline-info">Ir a la tienda</a>
+                </div>
+            {% endif %}
+        </div>
+        
+    {% endif %}
+</div>
+
+<div class="modal fade" id="modalDetalles" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-dark text-white border-secondary">
+            <div class="modal-header border-secondary">
+                <h5 class="modal-title">Detalles del Pedido <span id="num_pedido_modal" class="text-info"></span></h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="contenido_detalles">
+                <div class="text-center py-3">
+                    <div class="spinner-border text-info" role="status"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+function verDetalles(id_pedido) {
+    const modal = new bootstrap.Modal(document.getElementById('modalDetalles'));
+    document.getElementById('num_pedido_modal').innerText = '#' + id_pedido;
+    document.getElementById('contenido_detalles').innerHTML = '<div class="text-center py-3"><div class="spinner-border text-info"></div></div>';
+    modal.show();
+
+    fetch('/pedido_detalles/' + id_pedido)
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('contenido_detalles').innerHTML = html;
+        });
+}
+</script>
+{% endblock %}

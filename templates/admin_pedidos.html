@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Gestión de Pedidos{% endblock %}
+{% block header %}Panel de Logística{% endblock %}
+
+{% block contenido %}
+<div class="container mt-4 py-4">
+    <div class="card p-4 mx-auto shadow-lg" style="background-color: #1a1d20; border: 1px solid #343a40;">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h4 class="text-white mb-0"><i class="fa-solid fa-truck-fast me-2 text-warning"></i> Todos los Pedidos</h4>
+            <a href="/tabla_productos" class="btn btn-sm btn-outline-light">Volver a Productos</a>
+        </div>
+
+        {% if pedidos %}
+            <div class="table-responsive">
+                <table class="table table-dark table-striped table-hover align-middle border-secondary">
+                    <thead>
+                        <tr class="text-secondary small text-uppercase">
+                            <th>Orden</th>
+                            <th>Cliente</th>
+                            <th>Productos</th> <th>Fecha</th>
+                            <th>Dirección</th>
+                            <th>Total</th>
+                            <th>Estado Actual / Actualizar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for pedido in pedidos %}
+                        <tr>
+                            <td class="fw-bold text-info">#{{ pedido[0] }}</td>
+                            <td>{{ pedido[1] }}</td>
+                            
+                            <td class="small text-warning">{{ pedido[6]|safe }}</td> 
+                            
+                            <td class="small">{{ pedido[2].strftime('%d/%m/%Y %H:%M') if pedido[2] else 'N/A' }}</td>
+                            <td class="small text-truncate" style="max-width: 200px;" title="{{ pedido[5] }}">
+                                {{ pedido[5] }}
+                            </td>
+                            <td class="text-success fw-bold">${{ "{:,.2f}".format(pedido[3]) }}</td>
+                            
+                            <td>
+                                <form action="/actualizar_estado" method="POST" class="d-flex align-items-center gap-2">
+                                    <input type="hidden" name="id_pedido" value="{{ pedido[0] }}">
+                                    
+                                    <select name="nuevo_estado" class="form-select form-select-sm bg-dark text-white border-secondary" style="width: auto;">
+                                        <option value="Pendiente" {% if pedido[4] == 'Pendiente' %}selected{% endif %}>Pendiente</option>
+                                        <option value="Enviado" {% if pedido[4] == 'Enviado' %}selected{% endif %}>Enviado</option>
+                                        <option value="Entregado" {% if pedido[4] == 'Entregado' %}selected{% endif %}>Entregado</option>
+                                        <option value="Cancelado" {% if pedido[4] == 'Cancelado' %}selected{% endif %}>Cancelado</option>
+                                    </select>
+                                    
+                                    <button type="submit" class="btn btn-sm btn-outline-warning" title="Guardar Cambio">
+                                        <i class="fa-solid fa-floppy-disk"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="text-center py-5">
+                <i class="fa-solid fa-inbox fa-3x text-secondary mb-3"></i>
+                <p class="text-secondary fs-5">No hay pedidos registrados en el sistema todavía.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

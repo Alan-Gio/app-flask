@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Detalles{% endblock %}
+{% block header %}Información del Producto{% endblock %}
+
+{% block contenido %}
+<div class="card mx-auto p-4" style="max-width: 800px; display: flex; flex-direction: row; gap: 30px; align-items: center; flex-wrap: wrap;"> 
+    <div style="flex: 1; min-width: 250px; text-align: center;">
+        <img src="data:image/jpeg;base64,{{ producto['p_imagen'] }}" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.5);" alt="Imagen del producto">
+    </div>
+    
+    <div style="flex: 2; min-width: 300px;">
+        <h3 style="color: var(--accent-color); margin-bottom: 15px;">{{ producto['p_nombre'] }}</h3>
+        
+        <p class="text-secondary" style="line-height: 1.6;">{{ producto['p_descripcion'] }}</p>
+        
+        <div style="margin: 20px 0; padding: 15px; background: #262626; border-radius: 8px;">
+            <p class="mb-1"><strong>Precio:</strong> <span class="text-success fw-bold fs-5">${{ producto['p_precio'] }}</span></p>
+            <p class="mb-0"><strong>Stock disponible:</strong> {{ producto['p_stock'] }} unidades</p>
+        </div>
+        
+        <div class="d-flex gap-2 flex-wrap">
+            <a href="#" class="btn">Comprar</a>
+            <a href="{{ url_for('editar_producto', id=producto['p_id']) }}" class="btn" style="background-color: #4b5563;">Editar</a>
+            <a href="#" class="btn" style="background-color: var(--danger-color);">Eliminar</a>
+            <a href="{{ url_for('tabla_productos') }}" class="btn" style="background-color: transparent; border: 1px solid var(--border-color);">Volver</a>
+        </div>
+    </div>
+</div>  
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Registro{% endblock %}
+{% block header %}Crear Cuenta{% endblock %}
+
+{% block contenido %}
+<div class="d-flex justify-content-center">
+    <div style="width: 100%; max-width: 500px;">
+
+        <div class="mb-4 text-center">
+            {% if session.get('usuario_rol') == 'admin' %}
+                <a href="/tabla" class="text-decoration-underline"><i class="fa-solid fa-arrow-left"></i> Regresar a la Tabla</a>
+            {% else %}
+                <a href="/" class="text-decoration-underline text-secondary" style="font-size: 0.9rem;">
+                    <i class="fa-solid fa-arrow-left"></i> Regresar al Inicio
+                </a>
+            {% endif %}
+        </div>
+
+        <form action="/formulario" method="post">
+            <div>
+                <label for="cNombre">Nombre</label>
+                <input type="text" name="cNombre" id="cNombre" required>
+            </div>
+            <div>
+                <label for="cApell">Apellido Paterno</label>
+                <input type="text" name="cApell" id="cApell" required>             
+            </div>
+            <div>
+                <label for="cApell2">Apellido Materno</label>
+                <input type="text" name="cApell2" id="cApell2" required>
+            </div>
+            <div>
+                <label for="cEdad">Edad</label>
+                <input type="number" name="cEdad" id="cEdad" required>
+            </div>
+            <div>
+                <label for="cUsuario">Correo Electrónico</label>
+                <input type="email" name="cUsuario" id="cUsuario" placeholder="ejemplo@email.com" required>
+            </div>
+            <div>
+                <label for="cpass">Contraseña</label>
+                <input type="password" name="cpass" id="cpass" required>
+            </div>
+            <div>
+                <label for="cpass2">Confirmar Contraseña</label>
+                <input type="password" name="cpass2" id="cpass2" required>
+            </div>
+            
+            {% if session.get('usuario_rol') != 'admin' %}
+            <div>
+                <label for="cTyc" style="font-size: 0.9rem;">
+                    <input type="checkbox" name="cTyc" id="cTyc" required>
+                    Aceptar <a href="#" style="color: var(--accent-color);">Términos y condiciones</a>
+                </label>
+            </div>
+            {% endif %}
+            
+            <div class="mt-4">
+                <button type="submit">Crear cuenta</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
