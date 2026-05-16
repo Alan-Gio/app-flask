@@ -9,7 +9,33 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_mail import Mail, Message
 
 # importar libreria de Mysql (MaDB)
-from flask_mysqldb import MySQL
+#from flask_mysqldb import MySQL
+
+import pymysql
+from flask import g
+
+# Clon mágico compatible con Vercel y Aiven
+class MySQL:
+    def __init__(self, app=None):
+        self.app = app
+
+    @property
+    def connection(self):
+        if 'db_conn' not in g:
+            # Revisa si usabas el cursor de diccionario
+            cursor_class = pymysql.cursors.DictCursor if self.app.config.get('MYSQL_CURSORCLASS') == 'DictCursor' else pymysql.cursors.Cursor
+            
+            g.db_conn = pymysql.connect(
+                host=self.app.config.get('MYSQL_HOST'),
+                user=self.app.config.get('MYSQL_USER'),
+                password=self.app.config.get('MYSQL_PASSWORD'),
+                database=self.app.config.get('MYSQL_DATABASE'),
+                port=int(self.app.config.get('MYSQL_PORT', 3306)),
+                ssl={"ssl": True}, # SSL Obligatorio para Aiven
+                cursorclass=cursor_class,
+                autocommit=True
+            )
+        return g.db_conn
 
 app = Flask(__name__)
 
