@@ -9,7 +9,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_mail import Mail, Message
 
 # importar libreria de Mysql (MaDB)
-#from flask_mysqldb import MySQL
+# from flask_mysqldb import MySQL
 
 import pymysql
 from flask import g
@@ -30,8 +30,8 @@ class MySQL:
                 user=self.app.config.get('MYSQL_USER'),
                 password=self.app.config.get('MYSQL_PASSWORD'),
                 database=self.app.config.get('MYSQL_DATABASE'),
-                port=int(self.app.config.get('MYSQL_PORT', 3306)),
-                ssl={"ssl": True}, # SSL Obligatorio para Aiven
+                port=int(self.app.config.get('MYSQL_PORT', 20752)),
+                ssl={}, 
                 cursorclass=cursor_class,
                 autocommit=True
             )

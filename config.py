@@ -9,8 +9,9 @@ class ConfigVar:
     MYSQL_HOST = os.getenv("MYSQL_HOST")
     MYSQL_USER = os.getenv("MYSQL_USER")
     MYSQL_PASSWORD = os.getenv("MYSQL_PASSWORD")
-    MYSQL_DB = os.getenv("MYSQL_DATABASE")
+    MYSQL_DATABASE = os.getenv("MYSQL_DATABASE")
     MYSQL_UNIX_SOCKET = os.getenv("MYSQL_UNIX_SOCKET")
+    MYSQL_PORT = os.getenv("MYSQL_PORT", 20752)
     
     # --- Configuración de Flask-Mail ---
     MAIL_SERVER = 'smtp.gmail.com'
