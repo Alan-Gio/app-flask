@@ -38,7 +38,7 @@
         <tbody>
             {% if productos %}
                 {% for p in productos %}
-                <tr {% if p.p_estado == 0 %} style="opacity: 0.5; background-color: rgba(255,255,255,0.05);" {% endif %}></tr>
+                <tr {% if p.p_estado == 0 %} style="opacity: 0.5; background-color: rgba(255,255,255,0.05);" {% endif %}>
                     <td>{{ p.p_cod }}</td>
                     <td>{{ p.p_name }}</td>
                     <td class="text-success fw-bold">${{ p.p_precio }}</td>
@@ -58,7 +58,7 @@
                                 <i class="fa-solid fa-pen"></i> Editar
                             </a>
                         {% else %}
-                            <span class="text-muted small">No editable</span>
+                            <span class="text-white small">No editable</span>
                         {% endif %}
                     </td>
                     
