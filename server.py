@@ -156,7 +156,7 @@ def tabla():
 @app.route('/editar/<int:id>', methods=['GET', 'POST'])
 @admin_requerido 
 def editar(id):
-    id_data = str(id)
+    # 1. PARTE GET: Obtener la info para mostrarla en el HTML (readonly)
     sql_usuarios_editar = "SELECT * FROM usuarios WHERE id_user = %s"
     con_user = mysql.connection.cursor()
     con_user.execute(sql_usuarios_editar, (id,))
@@ -179,43 +179,27 @@ def editar(id):
     else:
         flash("No hay informacion del usuario", "warning")
 
+    # 2. PARTE POST: Procesar la actualización del candado real
     if request.method == 'POST':
-        eNombre = request.form.get('eNombre')
-        eApell = request.form.get('eApell')
-        eApell2 = request.form.get('eApell2')
-        eEdad = request.form.get('eEdad')
-        eUsuario = request.form.get('eUsuario')
+        # SOLO capturamos el rol, ignoramos cualquier otro dato modificado a la fuerza en el HTML
         eRol = request.form.get('eRol')
 
-        campos = [eNombre, eApell, eApell2, eEdad, eUsuario]
-        tipos = ["nombre", "apellidop", "apellidom", "edad", "correo"]
-
-        datos_validos = True
-
-        for valor, tipo in zip(campos, tipos):
-            if not valor:  
-                flash(f"El campo {tipo} no puede estar vacío.", "danger")
-                datos_validos = False
-            elif not validarcampos(valor, tipo):  
-                flash(f"El formato ingresado en {tipo} no es válido.", "danger")
-                datos_validos = False
-
-        if datos_validos:
-            insertar = mysql.connection.cursor()
-            insertar.execute("SELECT * FROM usuarios WHERE mail_user = %s AND id_user != %s", (eUsuario,id))  
-            usuario_existente = insertar.fetchone()
-                
-            if usuario_existente:
-                flash("El correo electrónico ya está registrado. Por favor, utiliza otro.", "danger")
-            else:
-                insertar.execute("UPDATE usuarios SET name_user = %s, apellp_user = %s, apellm_user = %s, edad_user = %s, mail_user = %s, rol_user = %s WHERE id_user = %s", (eNombre,eApell,eApell2,eEdad,eUsuario,eRol,id))
-                mysql.connection.commit()
-                flash("Todos los datos se han actualizado correctamente.", "success")
-            insertar.close()
-            return redirect(url_for('tabla'))
+        # Pequeña validación extra de seguridad por si envían datos basura
+        if eRol in ['admin', 'cliente']:
+            actualizar = mysql.connection.cursor()
+            # La consulta SQL ESTRICTAMENTE solo modifica el 'rol_user'
+            actualizar.execute("UPDATE usuarios SET rol_user = %s WHERE id_user = %s", (eRol, id))
+            mysql.connection.commit()
+            actualizar.close()
+            flash("Rol de usuario actualizado correctamente.", "success")
+        else:
+            flash("El rol seleccionado no es válido.", "danger")
+            
+        con_user.close()
+        return redirect(url_for('tabla'))
 
     con_user.close()
-    return render_template("editar.html", info_user=info_user) 
+    return render_template("editar.html", info_user=info_user)
 
 # ELIMINAR USUARIO (Solo Admin)
 @app.route('/eliminar/<int:id>')

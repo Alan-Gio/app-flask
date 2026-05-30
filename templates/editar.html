@@ -12,24 +12,25 @@
         <form action="{{ url_for('editar', id=info_user.id_user) }}" method="post">
             <div>
                 <label for="eNombre">Nombre</label>
-                <input type="text" name="eNombre" id="eNombre" required value="{{ info_user.name_user }}">
+                <input type="text" name="eNombre" id="eNombre" value="{{ info_user.name_user }}" readonly style="background-color: #e9ecef; outline: none;">
             </div>
             <div>
                 <label for="eApell">Apellido Paterno</label>
-                <input type="text" name="eApell" id="eApell" required value="{{ info_user.apellp_user }}">             
+                <input type="text" name="eApell" id="eApell" value="{{ info_user.apellp_user }}" readonly style="background-color: #e9ecef; outline: none;">             
             </div>
             <div>
                 <label for="eApell2">Apellido Materno</label>
-                <input type="text" name="eApell2" id="eApell2" required value="{{ info_user.apellm_user }}">
+                <input type="text" name="eApell2" id="eApell2" value="{{ info_user.apellm_user }}" readonly style="background-color: #e9ecef; outline: none;">
             </div> 
             <div>
                 <label for="eEdad">Edad</label>
-                <input type="number" name="eEdad" id="eEdad" required value="{{ info_user.edad_user }}">
+                <input type="number" name="eEdad" id="eEdad" value="{{ info_user.edad_user }}" readonly style="background-color: #e9ecef; outline: none;">
             </div>
             <div>
                 <label for="eUsuario">Correo Electrónico</label>
-                <input type="email" name="eUsuario" id="eUsuario" required value="{{ info_user.mail_user }}">
+                <input type="email" name="eUsuario" id="eUsuario" value="{{ info_user.mail_user }}" readonly style="background-color: #e9ecef; outline: none;">
             </div> 
+            
             <div>
                 <label for="eRol">Rol de Usuario</label>
                 <select name="eRol" id="eRol" required>
@@ -38,7 +39,7 @@
                 </select>
             </div>
             <div class="mt-4">
-                <button type="submit">Actualizar Usuario</button>
+                <button type="submit" class="btn btn-primary">Actualizar Rol</button>
             </div> 
         </form>
     {% else %}
