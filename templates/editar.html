@@ -12,23 +12,23 @@
         <form action="{{ url_for('editar', id=info_user.id_user) }}" method="post">
             <div>
                 <label for="eNombre">Nombre</label>
-                <input type="text" name="eNombre" id="eNombre" value="{{ info_user.name_user }}" readonly style="background-color: #e9ecef; outline: none;">
+                <input type="text" name="eNombre" id="eNombre" value="{{ info_user.name_user }}" readonly style="background-color: #e9ecef; color: #333; outline: none; border: 1px solid #ccc;">
             </div>
             <div>
                 <label for="eApell">Apellido Paterno</label>
-                <input type="text" name="eApell" id="eApell" value="{{ info_user.apellp_user }}" readonly style="background-color: #e9ecef; outline: none;">             
+                <input type="text" name="eApell" id="eApell" value="{{ info_user.apellp_user }}" readonly style="background-color: #e9ecef; color: #333; outline: none; border: 1px solid #ccc;">             
             </div>
             <div>
                 <label for="eApell2">Apellido Materno</label>
-                <input type="text" name="eApell2" id="eApell2" value="{{ info_user.apellm_user }}" readonly style="background-color: #e9ecef; outline: none;">
+                <input type="text" name="eApell2" id="eApell2" value="{{ info_user.apellm_user }}" readonly style="background-color: #e9ecef; color: #333; outline: none; border: 1px solid #ccc;">
             </div> 
             <div>
                 <label for="eEdad">Edad</label>
-                <input type="number" name="eEdad" id="eEdad" value="{{ info_user.edad_user }}" readonly style="background-color: #e9ecef; outline: none;">
+                <input type="number" name="eEdad" id="eEdad" value="{{ info_user.edad_user }}" readonly style="background-color: #e9ecef; color: #333; outline: none; border: 1px solid #ccc;">
             </div>
             <div>
                 <label for="eUsuario">Correo Electrónico</label>
-                <input type="email" name="eUsuario" id="eUsuario" value="{{ info_user.mail_user }}" readonly style="background-color: #e9ecef; outline: none;">
+                <input type="email" name="eUsuario" id="eUsuario" value="{{ info_user.mail_user }}" readonly style="background-color: #e9ecef; color: #333; outline: none; border: 1px solid #ccc;">
             </div> 
             
             <div>
