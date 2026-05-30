@@ -212,6 +212,33 @@ def eliminar(id):
     flash("Usuario eliminado correctamente", "success")
     return redirect(url_for('tabla'))
 
+# CAMBIAR ESTADO DE USUARIO (Soft Delete - Solo Admin)
+@app.route('/cambiar_estado_usuario/<int:id>/<int:estado>', methods=['GET'])
+@admin_requerido
+def cambiar_estado_usuario(id, estado):
+    # Seguridad: Evitar que un administrador se desactive a sí mismo por error
+    if session.get('usuario_id') == id and estado == 0:
+        flash("No puedes desactivar tu propia cuenta de administrador.", "danger")
+        return redirect(url_for('tabla'))
+
+    # Aseguramos que el estado recibido sea válido (solo 0 o 1)
+    if estado in [0, 1]:
+        cursor = mysql.connection.cursor()
+        # Modificamos la columna 'activo_user' en lugar de usar DELETE
+        sql = "UPDATE usuarios SET activo_user = %s WHERE id_user = %s"
+        cursor.execute(sql, (estado, id))
+        mysql.connection.commit()
+        cursor.close()
+        
+        if estado == 0:
+            flash("Usuario desactivado correctamente.", "success")
+        else:
+            flash("Usuario restaurado correctamente.", "success")
+    else:
+        flash("Operación no válida.", "danger")
+
+    return redirect(url_for('tabla'))
+
 # AGREGAR PRODUCTOS (Solo Admin)
 @app.route('/agregar_productos', methods=['GET', 'POST'])
 @admin_requerido 

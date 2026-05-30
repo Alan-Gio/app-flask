@@ -29,14 +29,14 @@
                 <th>Edad</th>
                 <th>Correo</th>
                 <th>Rol</th>
-                <th>Registro</th>
+                <th>Estatus</th> <th>Registro</th>
                 <th colspan="2" class="text-center">Acciones</th>
             </tr>
         </thead>
         <tbody>
             {% if usuarios %}
                 {% for mostrar in usuarios %}
-                <tr>
+                <tr {% if not mostrar.activo_user %}style="opacity: 0.6;"{% endif %}>
                     <td>{{ mostrar.id_user }}</td>
                     <td>{{ mostrar.name_user }}</td>
                     <td>{{ mostrar.apellp_user }} {{ mostrar.apellm_user }}</td>
@@ -49,14 +49,29 @@
                             <span class="badge bg-secondary">{{ mostrar.rol_user }}</span>
                         {% endif %}
                     </td>
+                    <td>
+                        {% if mostrar.activo_user %}
+                            <span class="badge bg-success">Activo</span>
+                        {% else %}
+                            <span class="badge bg-danger">Inactivo</span>
+                        {% endif %}
+                    </td>
                     <td style="font-size: 0.8rem;">{{ mostrar.creacion_user }}</td>
-                    <td><a href="{{ url_for('editar', id=mostrar.id_user) }}" class="btn btn-sm" style="padding: 5px 10px; font-size: 0.8rem;">Editar</a></td>
-                    <td><a href="{{ url_for('eliminar', id=mostrar.id_user) }}" class="btn btn-sm" style="background-color: var(--danger-color); padding: 5px 10px; font-size: 0.8rem;" onclick="return confirm('¿Estás seguro que deseas eliminar al usuario?');">Eliminar</a></td>
+                    <td>
+                        <a href="{{ url_for('editar', id=mostrar.id_user) }}" class="btn btn-sm" style="padding: 5px 10px; font-size: 0.8rem;">Editar</a>
+                    </td>
+                    <td>
+                        {% if mostrar.activo_user %}
+                            <a href="/cambiar_estado_usuario/{{ mostrar.id_user }}/0" class="btn btn-sm" style="background-color: var(--danger-color); padding: 5px 10px; font-size: 0.8rem;" onclick="return confirm('¿Estás seguro que deseas desactivar al usuario?');">Desactivar</a>
+                        {% else %}
+                            <a href="/cambiar_estado_usuario/{{ mostrar.id_user }}/1" class="btn btn-sm btn-success" style="padding: 5px 10px; font-size: 0.8rem;" onclick="return confirm('¿Deseas restaurar el acceso a este usuario?');">Restaurar</a>
+                        {% endif %}
+                    </td>
                 </tr>
                 {% endfor %}
             {% else %}
                 <tr>
-                    <td colspan="9" class="text-center py-4">No hay usuarios registrados con ese criterio</td>
+                    <td colspan="10" class="text-center py-4">No hay usuarios registrados con ese criterio</td>
                 </tr>
             {% endif %}
         </tbody>
