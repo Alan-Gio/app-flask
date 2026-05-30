@@ -781,7 +781,7 @@ def formulario():
                 flash("Todos los datos son correctos. Registro exitoso.", "success")
                 insertar.close()
 
-                if session.get('rol_user') == 'admin':
+                if session.get('usuario_rol') == 'admin':
                     return redirect(url_for('tabla'))
                 else:
                     return redirect(url_for('login'))
