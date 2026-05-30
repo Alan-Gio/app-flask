@@ -779,10 +779,12 @@ def formulario():
                 insertar.execute(sql_insert, (cNombre,cApP,cApM,cedad,cemail,contra_segura))
                 mysql.connection.commit()
                 flash("Todos los datos son correctos. Registro exitoso.", "success")
-
                 insertar.close()
 
-                return redirect(url_for('login'))
+                if session.get('rol_user') == 'admin':
+                    return redirect(url_for('tabla'))
+                else:
+                    return redirect(url_for('login'))
 
             insertar.close()
 
