@@ -156,7 +156,7 @@ def tabla():
 @app.route('/editar/<int:id>', methods=['GET', 'POST'])
 @admin_requerido 
 def editar(id):
-    # 1. PARTE GET: Obtener la info para mostrarla en el HTML (readonly)
+    
     sql_usuarios_editar = "SELECT * FROM usuarios WHERE id_user = %s"
     con_user = mysql.connection.cursor()
     con_user.execute(sql_usuarios_editar, (id,))
@@ -179,18 +179,27 @@ def editar(id):
     else:
         flash("No hay informacion del usuario", "warning")
 
-    # 2. PARTE POST: Procesar la actualización del candado real
+    
     if request.method == 'POST':
-        # SOLO capturamos el rol, ignoramos cualquier otro dato modificado a la fuerza en el HTML
+        
         eRol = request.form.get('eRol')
 
-        # Pequeña validación extra de seguridad por si envían datos basura
+        
         if eRol in ['admin', 'cliente']:
             actualizar = mysql.connection.cursor()
-            # La consulta SQL ESTRICTAMENTE solo modifica el 'rol_user'
+        
             actualizar.execute("UPDATE usuarios SET rol_user = %s WHERE id_user = %s", (eRol, id))
             mysql.connection.commit()
             actualizar.close()
+            
+            if session.get('usuario_id') == id:
+                
+                if eRol == 'cliente':
+                    session.clear()  
+                    con_user.close()
+                    flash("Has cambiado tu rol a cliente. Tu sesión se ha cerrado por seguridad, vuelve a ingresar.", "warning")
+                    return redirect(url_for('login'))
+
             flash("Rol de usuario actualizado correctamente.", "success")
         else:
             flash("El rol seleccionado no es válido.", "danger")
