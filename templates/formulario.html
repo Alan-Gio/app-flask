@@ -47,14 +47,14 @@
                 <input type="password" name="cpass2" id="cpass2" required>
             </div>
             
-            {% if session.get('usuario_rol') != 'admin' %}
+            
             <div>
                 <label for="cTyc" style="font-size: 0.9rem;">
                     <input type="checkbox" name="cTyc" id="cTyc" required>
                     Aceptar <a href="#" style="color: var(--accent-color);">Términos y condiciones</a>
                 </label>
             </div>
-            {% endif %}
+            
             
             <div class="mt-4">
                 <button type="submit">Crear cuenta</button>
